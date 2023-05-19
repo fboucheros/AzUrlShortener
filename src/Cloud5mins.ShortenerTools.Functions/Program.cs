@@ -2,6 +2,7 @@ using Cloud5mins.ShortenerTools.Core.Domain;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Azure.Functions.Worker.Extensions.OpenApi.Extensions;
 
 namespace Cloud5mins.ShortenerTools
 {
@@ -12,7 +13,9 @@ namespace Cloud5mins.ShortenerTools
             ShortenerSettings shortenerSettings = null;
 
             var host = new HostBuilder()
-                .ConfigureFunctionsWorkerDefaults()
+                //.ConfigureFunctionsWorkerDefaults()
+                .ConfigureFunctionsWorkerDefaults(worker => worker.UseNewtonsoftJson())
+                .ConfigureOpenApi()
                 .ConfigureServices((context, services) =>
                 {
                     // Add our global configuration instance

@@ -33,6 +33,7 @@ using Cloud5mins.ShortenerTools.Core.Domain;
 // using Microsoft.Azure.WebJobs.Extensions.Http;
 using Microsoft.Azure.Functions.Worker;
 using Microsoft.Azure.Functions.Worker.Http;
+using Microsoft.Azure.WebJobs.Extensions.OpenApi.Core.Attributes;
 using Microsoft.Extensions.Logging;
 using System;
 using System.IO;
@@ -55,6 +56,11 @@ namespace Cloud5mins.ShortenerTools.Functions
         }
 
         [Function("UrlUpdate")]
+        [OpenApiOperation(operationId: "Run", tags: new[] { "UrlUpdate" }, Summary = "UrlUpdate", Description = "Update a short URL.")]
+        [OpenApiRequestBody(contentType: "application/json", bodyType: typeof(ShortUrlEntity), Required = true, Description = "Contains information about the URL to edit: the long URL, the title of the page, and the vanity URL and the schedule.")]
+        [OpenApiResponseWithBody(HttpStatusCode.OK, "application/json", typeof(ShortUrlEntity), Summary = "Short URL updated.")]
+        [OpenApiResponseWithBody(HttpStatusCode.BadRequest, "application/json", typeof(string), Summary = "Error response", Description = "This returns an error response if the request is invalid.")]   
+        [OpenApiResponseWithBody(HttpStatusCode.NotFound, "application/json", typeof(string), Summary = "Error response", Description = "The short URL was not found.")]     
         public async Task<HttpResponseData> Run(
         [HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = "api/UrlUpdate")] HttpRequestData req,
                                     ExecutionContext context

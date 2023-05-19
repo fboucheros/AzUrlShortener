@@ -24,6 +24,7 @@ using Cloud5mins.ShortenerTools.Core.Domain;
 using Cloud5mins.ShortenerTools.Core.Messages;
 using Microsoft.Azure.Functions.Worker;
 using Microsoft.Azure.Functions.Worker.Http;
+using Microsoft.Azure.WebJobs.Extensions.OpenApi.Core.Attributes;
 using Microsoft.Extensions.Logging;
 using System;
 using System.IO;
@@ -47,8 +48,14 @@ namespace Cloud5mins.ShortenerTools.Functions
         }
 
         [Function("UrlCreate")]
+        [OpenApiOperation(operationId: "Run", tags: new[] { "UrlCreate" }, Summary = "UrlCreate", Description = "Create a short URL from a longer one.")]
+        [OpenApiRequestBody(contentType: "application/json", bodyType: typeof(ShortRequest), Required = true, Description = "Contains information about the URL to be shortened: the long URL, the title of the page, and the vanity URL.")]
+        [OpenApiResponseWithBody(HttpStatusCode.OK, "application/json", typeof(ShortResponse), Summary = "Short URL created.")]
+        [OpenApiResponseWithBody(HttpStatusCode.Conflict, "application/json", typeof(string), Summary = "Error response", Description = "This returns an error response if the vanity URL already exists.")]
+        [OpenApiResponseWithBody(HttpStatusCode.BadRequest, "application/json", typeof(string), Summary = "Error response", Description = "The URL provided is missing or invalid. Or something wrong happens.")]
+        [OpenApiResponseWithBody(HttpStatusCode.NotFound, "application/json", typeof(string), Summary = "Error response", Description = "The request body is empty.")]        
         public async Task<HttpResponseData> Run(
-        [HttpTrigger(AuthorizationLevel.Anonymous, "get", "post", Route = "api/UrlCreate")] HttpRequestData req,
+        [HttpTrigger(AuthorizationLevel.Anonymous, "post", "get", Route = "api/UrlCreate")] HttpRequestData req,
             ExecutionContext context
         )
         {

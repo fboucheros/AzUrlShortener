@@ -25,6 +25,13 @@ using System.Linq;
 using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.Azure.WebJobs.Extensions.OpenApi.Core.Attributes;
+using Microsoft.Azure.WebJobs.Extensions.OpenApi.Core.Enums;
+using Microsoft.OpenApi.Models;
+using Microsoft.Azure.WebJobs.Extensions.OpenApi.Core.Abstractions;
+using Newtonsoft.Json.Serialization;
+using Microsoft.Azure.WebJobs.Extensions.OpenApi.Core.Resolvers;
+using System.Collections.Generic;
 
 namespace Cloud5mins.ShortenerTools.Functions
 {
@@ -41,6 +48,9 @@ namespace Cloud5mins.ShortenerTools.Functions
         }
 
         [Function("UrlList")]
+        [OpenApiOperation(operationId: "Run", tags: new[] { "UrlList" }, Summary = "UrlList", Description = "This returns a list of all the shortened URLs in the system.")]
+        [OpenApiResponseWithBody(HttpStatusCode.OK, "application/json", typeof(ListResponse), Summary = "A list of all the shortened URLs in the system.")]
+        [OpenApiResponseWithBody(HttpStatusCode.BadRequest, "application/json", typeof(string), Summary = "Error response", Description = "This returns an error response if the request is invalid.")]
         public async Task<HttpResponseData> Run(
         [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "api/UrlList")] HttpRequestData req, ExecutionContext context)
         {
