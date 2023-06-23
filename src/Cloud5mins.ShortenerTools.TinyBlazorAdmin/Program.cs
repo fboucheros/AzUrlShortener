@@ -8,9 +8,12 @@ var builder = WebAssemblyHostBuilder.CreateDefault(args);
 builder.RootComponents.Add<App>("#app");
 builder.RootComponents.Add<HeadOutlet>("head::after");
 var baseAddress = builder.HostEnvironment.BaseAddress;
-builder.Services
-        .AddScoped(sp => new HttpClient { BaseAddress = new Uri(baseAddress) })
-        .AddStaticWebAppsAuthentication();
+string azFuncAccessKey = builder.Configuration["azFuncAccessKey"];
+builder.Services.AddScoped(sp => new HttpClient { 
+                                BaseAddress = new Uri(baseAddress), 
+                                DefaultRequestHeaders =  { { "x-functions-key", azFuncAccessKey } } 
+                                })
+                .AddStaticWebAppsAuthentication();
 
 // builder.Services.AddMsalAuthentication(options =>
 // {
