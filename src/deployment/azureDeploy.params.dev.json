@@ -3,13 +3,13 @@
     "contentVersion": "1.0.0.0",
     "parameters": {
         "baseName": {
-            "value": "shortenertool"
+            "value": "shortsecure"
         },
         "existingSWAName": {
-            "value": "shortenertool-swa"
+            "value": "tinySecure"
         },
         "GitHubURL": {
-            "value": "https://github.com/fboucheros/AzUrlShortener"
+            "value": "https://github.com/fboucheros/AzUrlShortener.git"
         },
         "GitHubBranch": {
             "value": "secure-azfunc"
