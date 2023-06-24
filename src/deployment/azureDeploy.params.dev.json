@@ -9,13 +9,13 @@
             "value": "shortenertool-swa"
         },
         "GitHubURL": {
-            "value": "https://github.com/ch-rob/AzUrlShortener"
+            "value": "https://github.com/fboucheros/AzUrlShortener"
         },
         "GitHubBranch": {
-            "value": "UpdateDeployment2"
+            "value": "secure-azfunc"
         },
         "OwnerName": {
-            "value": "Chad V"
+            "value": "Frank"
         },
         "defaultRedirectUrl": {
             "value": "https://azure.com"
