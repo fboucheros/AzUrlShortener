@@ -8,7 +8,10 @@ var builder = WebAssemblyHostBuilder.CreateDefault(args);
 builder.RootComponents.Add<App>("#app");
 builder.RootComponents.Add<HeadOutlet>("head::after");
 var baseAddress = builder.HostEnvironment.BaseAddress;
-string azFuncAccessKey = builder.Configuration.GetValue<string>("azFuncAccessKey");
+
+var appSettings = builder.Configuration;
+
+string azFuncAccessKey = appSettings["azFuncAccessKey"];
 
 Console.WriteLine($"key (at init): {azFuncAccessKey}");
 
