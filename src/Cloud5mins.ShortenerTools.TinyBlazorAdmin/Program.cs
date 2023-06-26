@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Syncfusion.Blazor;
 using Cloud5mins.ShortenerTools.TinyBlazorAdmin;
 using AzureStaticWebApps.Blazor.Authentication;
+using Microsoft.Extensions.Configuration;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 builder.RootComponents.Add<App>("#app");
@@ -10,8 +11,18 @@ builder.RootComponents.Add<HeadOutlet>("head::after");
 var baseAddress = builder.HostEnvironment.BaseAddress;
 
 string azFuncAccessKey = builder.Configuration["azFuncAccessKey"];
+string azFuncAccessKey2= "yeah right";
+try
+{
+    azFuncAccessKey2 = builder.Configuration.GetSection("AppConfig")["azFuncAccessKey2"];
+}
+catch (Exception ex)
+{
+    Console.WriteLine($"Error: {ex.Message}");
+}
 
 Console.WriteLine($"key (at init): {azFuncAccessKey}");
+Console.WriteLine($"key2 (at init): {azFuncAccessKey2}");
 
 HttpClient httpClient = new HttpClient { BaseAddress = new Uri(baseAddress) };
 httpClient.DefaultRequestHeaders.Add("x-functions-key", azFuncAccessKey);
@@ -30,3 +41,8 @@ Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("NzYyMzI1QDMyMzAy
 builder.Services.AddSyncfusionBlazor();
 
 await builder.Build().RunAsync();
+
+
+public class AppConfig{
+    public string azFuncAccessKey2 { get; set; }
+}

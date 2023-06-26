@@ -272,7 +272,8 @@
             "properties": {
               "APPINSIGHTS_INSTRUMENTATIONKEY": "[reference(concat('microsoft.insights/components/', variables('insightsAppName')), '2015-05-01').InstrumentationKey]",
               "APPLICATIONINSIGHTS_CONNECTION_STRING": "[reference(concat('microsoft.insights/components/', variables('insightsAppName')), '2015-05-01').InstrumentationKey]",
-              "azFuncAccessKey": "[listkeys(concat(resourceId('Microsoft.Web/sites/', variables('funcAppName')), '/host/default/'),'2015-05-01').functionKeys.default]"
+              "azFuncAccessKey": "[listkeys(concat(resourceId('Microsoft.Web/sites/', variables('funcAppName')), '/host/default/'),'2015-05-01').functionKeys.default]",
+              "AppConfig::azFuncAccessKey2": "[listkeys(concat(resourceId('Microsoft.Web/sites/', variables('funcAppName')), '/host/default/'),'2015-05-01').functionKeys.default]"
             },
             "dependsOn": [
                 "[resourceId('Microsoft.Web/staticSites', variables('swaName'))]"
