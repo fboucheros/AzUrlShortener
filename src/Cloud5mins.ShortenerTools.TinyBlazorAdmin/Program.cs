@@ -9,9 +9,7 @@ builder.RootComponents.Add<App>("#app");
 builder.RootComponents.Add<HeadOutlet>("head::after");
 var baseAddress = builder.HostEnvironment.BaseAddress;
 
-var appSettings = builder.Configuration;
-
-string azFuncAccessKey = appSettings["azFuncAccessKey"];
+string azFuncAccessKey = builder.Configuration["azFuncAccessKey"];
 
 Console.WriteLine($"key (at init): {azFuncAccessKey}");
 
