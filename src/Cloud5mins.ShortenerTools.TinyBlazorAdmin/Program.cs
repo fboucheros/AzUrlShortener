@@ -10,6 +10,8 @@ builder.RootComponents.Add<HeadOutlet>("head::after");
 var baseAddress = builder.HostEnvironment.BaseAddress;
 string azFuncAccessKey = builder.Configuration.GetValue<string>("azFuncAccessKey");
 
+Console.WriteLine($"key (at init): {azFuncAccessKey}");
+
 HttpClient httpClient = new HttpClient { BaseAddress = new Uri(baseAddress) };
 httpClient.DefaultRequestHeaders.Add("x-functions-key", azFuncAccessKey);
 

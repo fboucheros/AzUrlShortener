@@ -204,6 +204,12 @@ else
     {
         try
         {
+             Console.WriteLine("-- Headers ------------");
+            foreach(var h in Http.DefaultRequestHeaders)
+            {
+                Console.WriteLine($"header -> {h.Key} : {h.Value}");
+            }
+
             using var response = await Http.GetAsync("/api/UrlList");
             if(response.IsSuccessStatusCode){
                 urls = await response.Content.ReadFromJsonAsync<ListResponse>();    
