@@ -9,6 +9,8 @@
 @inject HttpClient Http
 @inject IJSRuntime JSRuntime
 @inject NavigationManager NavigationManager
+@using Microsoft.Extensions.Configuration
+@inject IConfiguration Conf
 
 @attribute [Authorize(Roles = "admin")]
 
@@ -207,8 +209,11 @@ else
              Console.WriteLine("-- Headers ------------");
             foreach(var h in Http.DefaultRequestHeaders)
             {
-                Console.WriteLine($"header -> {h.Key} : {h.Value}");
+                Console.WriteLine($"header -> {h.Key} : {h.Value.ToString()}");
             }
+             Console.WriteLine("-- Conf ------------");
+            Console.WriteLine($"key1 -> {Conf["azFuncAccessKey"]}");
+
 
             using var response = await Http.GetAsync("/api/UrlList");
             if(response.IsSuccessStatusCode){

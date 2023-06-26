@@ -12,9 +12,10 @@ var baseAddress = builder.HostEnvironment.BaseAddress;
 
 string azFuncAccessKey = builder.Configuration["azFuncAccessKey"];
 string azFuncAccessKey2= "yeah right";
+var  azFuncAccessKey3 = builder.Configuration.GetValue<string>("azFuncAccessKey");
 try
 {
-    azFuncAccessKey2 = builder.Configuration.GetSection("AppConfig")["azFuncAccessKey2"];
+    azFuncAccessKey2 = builder.Configuration.GetSection("appsettings")["azFuncAccessKey2"];
 }
 catch (Exception ex)
 {
@@ -23,6 +24,7 @@ catch (Exception ex)
 
 Console.WriteLine($"key (at init): {azFuncAccessKey}");
 Console.WriteLine($"key2 (at init): {azFuncAccessKey2}");
+Console.WriteLine($"key3 (at init): {azFuncAccessKey3}");
 
 HttpClient httpClient = new HttpClient { BaseAddress = new Uri(baseAddress) };
 httpClient.DefaultRequestHeaders.Add("x-functions-key", azFuncAccessKey);
