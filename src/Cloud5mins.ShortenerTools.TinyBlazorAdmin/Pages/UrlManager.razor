@@ -10,7 +10,7 @@
 @inject IJSRuntime JSRuntime
 @inject NavigationManager NavigationManager
 @using Microsoft.Extensions.Configuration
-@inject IConfiguration Conf
+@inject IConfiguration Configuration
 
 @attribute [Authorize(Roles = "admin")]
 
@@ -212,7 +212,8 @@ else
                 Console.WriteLine($"header -> {h.Key} : {h.Value.ToString()}");
             }
              Console.WriteLine("-- Conf ------------");
-            Console.WriteLine($"key1 -> {Conf["azFuncAccessKey"]}");
+            Console.WriteLine($"key1 -> {Configuration["azFuncAccessKey"]}");
+            Console.WriteLine($"key2 -> {Configuration["APPINSIGHTS_INSTRUMENTATIONKEY"]}");
 
 
             using var response = await Http.GetAsync("/api/UrlList");

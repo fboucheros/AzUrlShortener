@@ -15,7 +15,7 @@ string azFuncAccessKey2= "yeah right";
 var  azFuncAccessKey3 = builder.Configuration.GetValue<string>("azFuncAccessKey");
 try
 {
-    azFuncAccessKey2 = builder.Configuration.GetSection("appsettings")["azFuncAccessKey2"];
+    azFuncAccessKey2 = builder.Configuration.GetSection("properties")["azFuncAccessKey2"];
 }
 catch (Exception ex)
 {
@@ -26,10 +26,10 @@ Console.WriteLine($"key (at init): {azFuncAccessKey}");
 Console.WriteLine($"key2 (at init): {azFuncAccessKey2}");
 Console.WriteLine($"key3 (at init): {azFuncAccessKey3}");
 
-HttpClient httpClient = new HttpClient { BaseAddress = new Uri(baseAddress) };
-httpClient.DefaultRequestHeaders.Add("x-functions-key", azFuncAccessKey);
+HttpClient http = new HttpClient { BaseAddress = new Uri(baseAddress) };
+http.DefaultRequestHeaders.Add("x-functions-key", azFuncAccessKey);
 
-builder.Services.AddScoped(sp => httpClient)
+builder.Services.AddScoped(sp => http)
                                 .AddStaticWebAppsAuthentication();
 
 // builder.Services.AddMsalAuthentication(options =>
